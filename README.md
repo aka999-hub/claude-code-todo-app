@@ -68,3 +68,7 @@ CLAUDE.mdのベストプラクティスを調査して、シンプルなTodoア�
 ```
 chore: add CLAUDE.md
 ```
+
+### React Router v7 パッケージのインストール
+
+[Cloudflare Workers w/ D1](https://reactrouter.com/start/framework/deploying#cloudflare-workers-w-d1)

@@ -1,74 +1,91 @@
-# claude-code-todo-app
+# Welcome to React Router!
 
-### claude code を dev container で動作させる .devcontainer 関連
+A modern, production-ready template for building full-stack React applications using React Router.
 
-[anthropics/claude-code](https://github.com/anthropics/claude-code/tree/main/.devcontainer)
+## Features
 
-### claude code 起動
+- 🚀 Server-side rendering
+- ⚡️ Hot Module Replacement (HMR)
+- 📦 Asset bundling and optimization
+- 🔄 Data loading and mutations
+- 🔒 TypeScript by default
+- 🎉 TailwindCSS for styling
+- 📖 [React Router docs](https://reactrouter.com/)
 
-```
-claude
-```
+## Getting Started
 
-### CLAUDE.md の作成
+### Installation
 
-- 要件の作成
-- （プロジェクトで使ってきた）コード規約、ベストプラクティス 等があったら INPUT にする
-- claude code 自身に作ってもらう
+Install the dependencies:
 
-```
-CLAUDE.mdのベストプラクティスを調査して、シンプルなTodoアプリ用のCLAUDE.mdを作ってください。技術スタックはReact Router v7, SQLite, Vitest, Playwrightを使いたいです。デプロイ先はCloudeflareで、Cloudeflare Workersを使いたいです。実装はNEVER始めないでください。
-```
-
-```実行結果
-> CLAUDE.mdのベストプラクティスを調査して、シンプルなTodoアプリ用のCLAUDE.mdを作ってください。技術スタックはReact
-  Router v7, SQLite, Vitest, Playwrightを使いたいです。デプロイ先はCloudeflareで、Cloudeflare
-  Workersを使いたいです。実装はNEVER始めないでください。
-  ⎿  ⧉ Selected 1 lines from README.md in Visual Studio Code
-
-● Update Todos
-  ⎿  ☐ Research CLAUDE.md best practices from Claude Code documentation
-     ☐ Create CLAUDE.md for Todo app with React Router v7, SQLite, Vitest, Playwright, Cloudflare Workers
-
-● Fetch(https://docs.anthropic.com/en/docs/claude-code/claude_code_docs_map.md)
-  ⎿  Received 16.7KB (200 OK)
-
-● Fetch(https://docs.anthropic.com/en/docs/claude-code/memory)
-  ⎿  Received 2MB (200 OK)
-
-● Fetch(https://docs.anthropic.com/en/docs/claude-code/examples/project-setup)
-  ⎿  Received 2MB (200 OK)
-
-● Update Todos
-  ⎿  ☒ Research CLAUDE.md best practices from Claude Code documentation
-     ☐ Create CLAUDE.md for Todo app with React Router v7, SQLite, Vitest, Playwright, Cloudflare Workers
-
-● Write(CLAUDE.md)
-  ⎿  Wrote 57 lines to CLAUDE.md
-     # Todo App Project Configuration
-     ## Project Overview
-     This is a modern Todo application built with:
-     - **Frontend**: React with React Router v7
-     - **Database**: SQLite
-     - **Testing**: Vitest for unit tests, Playwright for e2e tests
-     - **Deployment**: Cloudflare Workers
-     ## Technology Stack Details
-     … +47 lines (ctrl+r to expand)
-
-● Update Todos
-  ⎿  ☒ Research CLAUDE.md best practices from Claude Code documentation
-     ☒ Create CLAUDE.md for Todo app with React Router v7, SQLite, Vitest, Playwright, Cloudflare Workers
-
-● CLAUDE.mdを作成しました。このファイルはReact Router v7、SQLite、Vitest、Playwright、Cloudflare
-  Workersを使用するTodoアプリの開発に必要な情報を含んでいます。
+```bash
+npm install
 ```
 
-### git コミットコマンド
+### Development
 
+Run an initial database migration:
+
+```bash
+npm run db:migrate
 ```
-chore: add CLAUDE.md
+
+Start the development server with HMR:
+
+```bash
+npm run dev
 ```
 
-### React Router v7 パッケージのインストール
+Your application will be available at `http://localhost:5173`.
 
-[Cloudflare Workers w/ D1](https://reactrouter.com/start/framework/deploying#cloudflare-workers-w-d1)
+## Building for Production
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+## Deployment
+
+Deployment is done using the Wrangler CLI.
+
+First, you need to create a d1 database in Cloudflare.
+
+```sh
+npx wrangler d1 create <name-of-your-database>
+```
+
+Be sure to update the `wrangler.toml` file with the correct database name and id.
+
+You will also need to [update the `drizzle.config.ts` file](https://orm.drizzle.team/docs/guides/d1-http-with-drizzle-kit), and then run the production migration:
+
+```sh
+npm run db:migrate-production
+```
+
+To build and deploy directly to production:
+
+```sh
+npm run deploy
+```
+
+To deploy a preview URL:
+
+```sh
+npx wrangler versions upload
+```
+
+You can then promote a version to production after verification or roll it out progressively.
+
+```sh
+npx wrangler versions deploy
+```
+
+## Styling
+
+This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+
+---
+
+Built with ❤️ using React Router.

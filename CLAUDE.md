@@ -55,3 +55,4 @@ This is a modern Todo application built with:
 - Use proper error boundaries
 - Implement proper loading and error states
 - Consider offline functionality with service workers
+- Run typecheck and lint after completing tasks and be sure they ALWAYS pass.

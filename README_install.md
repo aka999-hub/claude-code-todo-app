@@ -337,5 +337,74 @@ npm run dev
 chore: init react router app
 ```
 
+### CLAUDE.md について
+
+- You can place CLAUDE.md files in several locations:
+  　CLAUDE.md は格納先により役割があるらしい
+  - The root of your repo,
+    リポジトリのルート、またはclaudeを実行する場所（最も一般的な使用法）。CLAUDE.mdという名前を付けてgitにチェックインすれば、セッション間やチームで共有できます（推奨）。または、CLAUDE.local.mdという名前を付けて.gitignoreで保存します。
+
+  - Any parent of the directory
+    claude を実行するディレクトリの親ディレクトリ。これはモノリポジトリで最も便利です。モノリポジトリでは、claude を root/foo から実行し、root/CLAUDE.md と root/foo/CLAUDE.md の両方に CLAUDE.md ファイルが存在する可能性があります。これらのファイルは両方とも自動的にコンテキストに取り込まれます。
+
+  - Any child of the directory
+    claude を実行するディレクトリの子ディレクトリ。これは上記の逆で、この場合、Claude は子ディレクトリ内のファイルを操作するたびに CLAUDE.md ファイルを読み込みます。
+
+  - Your home folder
+    ホームフォルダ（~/.claude/CLAUDE.md）は、すべてのclaudeセッションに適用されます。
+
+- CLAUDE.md は継続的にメンテしていく
+
+### CLAUDE.md に Lintを必ず行うように修正する
+
+claude CLI で "#" を入力すると "Add to memory." 違うモードに切り替わる
+Lintを必ず実施するように命令する
+
+```
+# Run typecheck and lint after completing tasks and be sure they ALWAYS pass.
+```
+
+```実際
+╭──────────────────────────────────────────────────────────────╮
+│ # Run typecheck and lint after completing tasks and be sure  │
+│   they ALWAYS pass.                                          │
+╰──────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────╮
+│                                                              │
+│ Where should this memory be saved?                           │
+│                                                              │
+│  ❯ 1. Project memory          Checked in at ./CLAUDE.md      │
+│   2. Project memory (local)  Gitignored in                   │
+│   ./CLAUDE.local.md                                          │
+│    3. User memory             Saved in ~/.claude/CLAUDE.md   │
+│                                                              │
+│ Example project memory: “Run lint with the following command │
+│  after major edits: npm run lint”                            │
+│
+```
+
+入れる場所を聞かれるので、`1. Project memory` を選択
+
+```
+ Run typecheck and lint after completing tasks and be sure
+they ALWAYS pass.
+  ⎿  Good to know.
+```
+
+CLAUDE.md の変更箇所を確認し、命令が追記されることを確認
+
+```CLAUDE.md
+## Architecture Notes
+- Keep components small and focused
+- Separate business logic from UI components
+- Use proper error boundaries
+- Implement proper loading and error states
+- Consider offline functionality with service workers
+- Run typecheck and lint after completing tasks and be sure they ALWAYS pass.
+```
+
+anthropic では prompt improver を使ってAIに改善してもらっている記事がある（※従量課金対象）
+[Use our prompt improver to optimize your prompts](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/prompt-improver)
+
 https://www.youtube.com/watch?v=GFJp1Wa1zMo&t=504s
 20:21

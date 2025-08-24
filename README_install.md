@@ -331,5 +331,11 @@ npm run dev
 
 画面表示されることを確認
 
+### githubにコミット
+
+```
+chore: init react router app
+```
+
 https://www.youtube.com/watch?v=GFJp1Wa1zMo&t=504s
 20:21

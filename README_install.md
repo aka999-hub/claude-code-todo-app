@@ -516,5 +516,301 @@ Figma APIアクセストークン
 [GLips / Figma-Context-MCP](https://github.com/GLips/Figma-Context-MCP?tab=readme-ov-file)
 Demo:[Creating a UI with Figma to Cursor MCP Server](https://www.youtube.com/watch?v=6G9yb-LrEqg)
 
+#### Figma コミュニティ版の使用方法
+
+1. 前提条件の準備
+   必要なもの：
+
+- Figmaアカウント（無料でOK）
+- Node.js がインストール済み
+- 対応するコードエディター（Cursor、VS Code、Windsurf、Claude Codeなど）
+
+2.  Figma APIアクセストークンの取得
+1.  Figmaにログイン
+    - https://www.figma.com にアクセス
+
+1.  設定画面へ移動
+    - 右上のプロフィール画像をクリック
+    - "Settings" を選択
+
+1.  Personal Access Tokenを作成
+    - 左サイドバーの "Personal access tokens" をクリック
+    - "Create new token" をクリック
+    - トークンに名前を付ける（例：「MCP Server」）
+    - 必要な権限を選択（通常は "File content" の読み取り権限）
+    - "Create token" をクリック
+
+1.  トークンを保存
+    - 生成されたトークンをコピーして安全な場所に保存
+    - ⚠️ このトークンは一度しか表示されないので注意
+
+1.  MCPサーバーのセットアップ
+    Cursor を使用する場合：
+    1.  Cursor の設定を開く
+        - Cmd/Ctrl + , で設定を開く
+        - "MCP" タブを選択
+
+    2.  新しいMCPサーバーを追加
+
+            - "+ Add new global MCP server" をクリック
+            - 以下の設定を入力：
+            '''
+            {
+              "mcpServers": {
+                "Figma MCP": {
+                  "command": "npx",
+                  "args": [
+                    "-y",
+                    "figma-developer-mcp",
+                    "--figma-api-key=YOUR_API_TOKEN_HERE",
+                    "--stdio"
+                  ]
+                }
+              }
+            }
+            '''
+
+    VS Code を使用する場合：3. MCP設定ファイルを作成/編集 - Windows: %APPDATA%\Code\User\globalStorage\mcp.json - Mac: ~/Library/Application Support/Code/User/globalStorage/mcp.json - Linux: ~/.config/Code/User/globalStorage/mcp.json 4. 設定内容：
+
+        ```
+        {
+          "mcpServers": {
+            "Figma MCP": {
+              "command": "npx",
+              "args": [
+                "-y",
+                "figma-developer-mcp",
+                "--figma-api-key=YOUR_API_TOKEN_HERE",
+                "--stdio"
+              ]
+            }
+          }
+        }
+        ```
+
+1.  使用方法
+1.  Figmaでファイルを開く
+    - 使用したいFigmaデザインファイルを開く
+    - ファイルのURLをコピー（例：https://www.figma.com/file/abc123/My-Design）
+
+1.  コードエディターで使用
+    - Cursor/VS Codeを再起動
+    - チャット機能やAI機能を開く
+    - 以下のようにプロンプトを入力：
+
+    ```
+    FigmaのデザインからReactコンポーネントを生成してください。
+    ファイルURL: https://www.figma.com/file/your-file-id/your-file-name
+    ```
+
+1.  よく使われる別のコミュニティ版
+    Figma-Context-MCP も人気です：
+
+```
+{
+  "mcpServers": {
+    "Figma Context MCP": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@glips/figma-context-mcp",
+        "--figma-token=YOUR_API_TOKEN_HERE"
+      ]
+    }
+  }
+}
+```
+
+6. トラブルシューティング
+   接続できない場合：- APIトークンが正しいか確認 - Node.jsが最新版か確認 - コードエディターを再起動 - ファイアウォール設定を確認
+   権限エラーの場合：- Figmaファイルへのアクセス権限があるか確認 - APIトークンの権限設定を見直し
+   これで無料でFigmaのMCP連携が使用できるようになります！何か詰まったところがあれば教えてください。
+
+### Figma UIデザイン
+
+Figmaで作成した UI のURL:
+https://www.figma.com/make/gAuh9es8lAnAWzxmF9awHu/React-Router-v7-TODO-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3?node-id=0-1&p=f&t=swEfZrDPqP3Lpg2j-0&fullscreen=1
+
+##### Figma mcp コミュニティ版の設定途中
+
+/home/node/.config/Code/User/mcp.json を作成
+api keyを設定
+
+### claude に mcp.json 作成依頼
+
+```
+ claude mcp add --transport sse -s project figma-dev-mode-mcp-server https://www.figma.com/make/gAuh9es8lAnAWzxmF9awHu/React-Router-v7-TODO-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3?node-id=0-1&p=f&t=R1K75Z3oDZRHal1I-0&fullscreen=1
+```
+
+```実際
+ node  /workspace   main ✚ ●   claude mcp add --transport sse -s project figma-dev-mode-mcp-server https://www.figma.com/make/gAuh9es8lAnAWzxmF9awHu/React-Router-v7-TODO-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3\?node-id\=0-1\&p\=f\&t\=R1K75Z3oDZRHal1I-0\&fullscreen\=1
+Added SSE MCP server figma-dev-mode-mcp-server with URL: https://www.figma.com/make/gAuh9es8lAnAWzxmF9awHu/React-Router-v7-TODO-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3?node-id=0-1&p=f&t=R1K75Z3oDZRHal1I-0&fullscreen=1 to project config
+File modified: /workspace/.mcp.json
+ node  /workspace   main ✚ ● ? 
+```
+
+`.mcp.json` ファイル作成を確認
+
+```
+ node  /workspace   main ✚ ● ?  ls -al .mcp.json
+-rw-r--r-- 1 node node 296 Aug 25 15:49 .mcp.json
+```
+
+```.mcp.json
+{
+  "mcpServers": {
+    "figma-dev-mode-mcp-server": {
+      "type": "sse",
+      "url": "https://www.figma.com/make/gAuh9es8lAnAWzxmF9awHu/React-Router-v7-TODO-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3?node-id=0-1&p=f&t=R1K75Z3oDZRHal1I-0&fullscreen=1"
+    }
+  }
+}
+```
+
+### claude 再実行
+
+```
+claude --dangerously-skip-permissions
+```
+
+```実際
+ node  /workspace   main ✚ ● ?  claude --dangerously-skip-permissions
+╭───────────────────────────────────────────────────╮
+│ ✻ Welcome to Claude Code!                         │
+│                                                   │
+│   /help for help, /status for your current setup  │
+│                                                   │
+│   cwd: /workspace                                 │
+╰───────────────────────────────────────────────────╯
+
+
+ What's new:
+  • Fixed issue causing "OAuth authentication is currently not supported"
+  • Status line input now includes `exceeds_200k_tokens`
+  • Fixed incorrect usage tracking in /cost.
+  • Introduced `ANTHROPIC_DEFAULT_SONNET_MODEL` and
+  `ANTHROPIC_DEFAULT_OPUS_MODEL` for controlling model aliases opusplan,
+  opus, and sonnet.
+  • Bedrock: Updated default Sonnet model to Sonnet 4
+
+╭────────────────────────────────────────────────────────────────────────╮
+│ > Try "fix typecheck errors"                                           │
+╰────────────────────────────────────────────────────────────────────────╯
+  ⏵⏵ bypass permissions on (shift+tab to cycle)        ⧉ 1 line selected
+```
+
+### mcp コマンド実行でfigmaが追加されているか確認
+
+```
+/mcp
+```
+
+```実際
+> /mcp
+  ⎿ No MCP servers configured. Please run /doctor if this is
+    unexpected. Otherwise, run `claude mcp` or visit
+    https://docs.anthropic.com/en/docs/claude-code/mcp to learn more.
+```
+
+figmaが追加されていない
+
+`claude --dangerously-skip-permissions` 起動だとmcp利用されない？
+`--dangerously-skip-permissions` を付けないで実行
+
+```claude で起動
+╭───────────────────────────────────────────────────╮
+│ ✻ Welcome to Claude Code!                         │
+│                                                   │
+│   /help for help, /status for your current setup  │
+│                                                   │
+│   cwd: /workspace                                 │
+╰───────────────────────────────────────────────────╯
+
+
+ What's new:
+  • Fixed issue causing "OAuth authentication is currently not supported"
+  • Status line input now includes `exceeds_200k_tokens`
+  • Fixed incorrect usage tracking in /cost.
+  • Introduced `ANTHROPIC_DEFAULT_SONNET_MODEL` and
+  `ANTHROPIC_DEFAULT_OPUS_MODEL` for controlling model aliases opusplan,
+  opus, and sonnet.
+  • Bedrock: Updated default Sonnet model to Sonnet 4
+╭────────────────────────────────────────────────────────────────────────╮
+│ Manage MCP servers                                                     │
+│                                                                        │
+│ ❯ 1. figma-dev-mode-mcp-server  ✘ failed · Enter to view details       │
+│                                                                        │
+│ ※ Tip: Run claude --debug to see logs inline, or view log files in     │
+│   /home/node/.cache/claude-cli-nodejs/-workspace                       │
+│                                                                        │
+│ MCP Config locations (by scope):                                       │
+│  • User config (available in all your projects):                       │
+│    • /home/node/.claude/.claude.json                                   │
+│  • Project config (shared via .mcp.json):                              │
+│    • /workspace/.mcp.json                                              │
+│  • Local config (private to you in this project):                      │
+│    • /home/node/.claude/.claude.json [project: /workspace]             │
+│                                                                        │
+│ For help configuring MCP servers, see:                                 │
+│ https://docs.anthropic.com/en/docs/claude-code/mcp                     │
+╰────────────────────────────────────────────────────────────────────────╯
+   Esc to exit
+```
+
+### Step 2: Set up your MCP client
+
+[Figma Learn](https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Dev-Mode-MCP-Server)
+
+1. Open your terminal and run:
+
+```
+claude mcp add --transport http figma-dev-mode-mcp-server http://127.0.0.1:3845/mcp
+```
+
+```ターミナルで実行
+ node  /workspace   main ✚ ● ?  claude mcp add --transport http figma-dev-mode-mcp-server http://127.0.0.1:3845/mcp
+Added HTTP MCP server figma-dev-mode-mcp-server with URL: http://127.0.0.1:3845/mcp to local config
+File modified: /home/node/.claude/.claude.json [project: /workspace]
+ node  /workspace   main ✚ ● ? 
+```
+
+```動画だとコマンドの http が sse になっているので再実行
+ node  /workspace   main ✚ ● ?  claude mcp add --transport sse figma-dev-mode-mcp-server http://127.0.0.1:3845/mcp
+MCP server figma-dev-mode-mcp-server already exists in local config
+ node  /workspace   main ✚ ● ?  ✘ 
+```
+
+上記だとスコープが自分だけなので、やり直すため mcp の削除
+
+```
+claude mcp remove figma-dev-mode-mcp-server
+```
+
+```実行すると複数個所にあるとエラーになる
+ node  /workspace   main ✚ ● ?  ✘  claude mcp remove figma-dev-mode-mcp-server
+
+MCP server "figma-dev-mode-mcp-server" exists in multiple scopes:
+  - Local config (private to you in this project) (/home/node/.claude/.claude.json [project: /workspace])
+  - Project config (shared via .mcp.json) (/workspace/.mcp.json)
+
+To remove from a specific scope, use:
+  claude mcp remove "figma-dev-mode-mcp-server" -s local
+  claude mcp remove "figma-dev-mode-mcp-server" -s project
+ node  /workspace   main ✚ ● ?  ✘ 
+```
+
+```ローカル指定で削除
+ node  /workspace   main ✚ ● ?  claude mcp remove figma-dev-mode-mcp-server -s local
+Removed MCP server figma-dev-mode-mcp-server from local config
+File modified: /home/node/.claude/.claude.json [project: /workspace]
+ node  /workspace   main ✚ ● ? 
+```
+
+動画にない設定
+
+[Claude Code：ベストプラクティス](https://www.anthropic.com/engineering/claude-code-best-practices)
+[Figma Learn](https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Dev-Mode-MCP-Server)
+[Claude Code ベストプラクティス](https://zenn.dev/farstep/articles/claude-code-best-practices)
+
 https://www.youtube.com/watch?v=GFJp1Wa1zMo&t=504s
-27:08
+28:25

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "figma-dev-mode-mcp-server": {
+      "type": "sse",
+      "url": "https://www.figma.com/make/gAuh9es8lAnAWzxmF9awHu/React-Router-v7-TODO-%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3?node-id=0-1&p=f&t=R1K75Z3oDZRHal1I-0&fullscreen=1"
+    }
+  }
+}

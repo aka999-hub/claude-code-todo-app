@@ -811,6 +811,7 @@ File modified: /home/node/.claude/.claude.json [project: /workspace]
 [Claude Code：ベストプラクティス](https://www.anthropic.com/engineering/claude-code-best-practices)
 [Figma Learn](https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Dev-Mode-MCP-Server)
 [Claude Code ベストプラクティス](https://zenn.dev/farstep/articles/claude-code-best-practices)
+[Design Materials ＃デザイン資料 – ＃エッジケースとは？バグの見つけ方とチェックリスト](https://note.com/nokowashiyama/n/n4284011d2b0e)
 
 https://www.youtube.com/watch?v=GFJp1Wa1zMo&t=504s
 28:25

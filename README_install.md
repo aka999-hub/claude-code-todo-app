@@ -406,5 +406,115 @@ CLAUDE.md の変更箇所を確認し、命令が追記されることを確認
 anthropic では prompt improver を使ってAIに改善してもらっている記事がある（※従量課金対象）
 [Use our prompt improver to optimize your prompts](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/prompt-improver)
 
+### claude code が使用可能なツールの設定
+
+- c. Curate Claude's list of allowed tools
+  c. Claude の許可ツールリストを整理する
+  デフォルトでは、Claude Code はシステムを変更する可能性のあるすべてのアクション（ファイルの書き込み、多くの bash コマンド、MCP ツールなど）に対して許可を求めます。Claude Code は、安全性を最優先にするため、意図的に保守的なアプローチを採用して設計されています。許可リストをカスタマイズすることで、安全であることがわかっているツールを追加で許可したり、簡単に元に戻せる可能性のある潜在的に危険なツール（ファイルの編集、git コミットなど）を許可したりできます。
+
+  `.claude/settings.json` or `~/.claude.json` 等のファイルで管理する
+
+### github 使うならCLIを使用する
+
+- d. If using GitHub, install the gh CLI
+  d. GitHub を使用する場合は、gh CLI をインストールしてください。
+  Claude は gh CLI を使用して GitHub とやり取りし、Issue の作成、プルリクエストのオープン、コメントの閲覧などを行う方法を知っています。gh がインストールされていない場合でも、Claude は GitHub API または MCP サーバー（インストールされている場合）を使用できます。
+
+- github cli 使用するにはログインしておく必要がル
+
+```
+gh auth login
+```
+
+```実際
+ node  /workspace   main ●  gh auth login
+? What account do you want to log into? GitHub.com
+? What is your preferred protocol for Git operations? HTTPS
+? Authenticate Git with your GitHub credentials? Yes
+? How would you like to authenticate GitHub CLI? Login with a web browser
+
+! First copy your one-time code: 3A10-8CBF
+Press Enter to open github.com in your browser...
+
+...
+Enter押下でブラウザ起動し、github認証すると one-time code 入力を促される
+入力し、連携の承認する
+承認が完了すると下記メッセージ出力
+...
+
+! First copy your one-time code: 3A10-8CBF
+Press Enter to open github.com in your browser...
+✓ Authentication complete.
+- gh config set -h github.com git_protocol https
+✓ Configured git protocol
+✓ Logged in as aka999-hub
+ node  /workspace   main ● 
+```
+
+上記が完了後に claude 実行すると、プルリクの作成なども claude codeに依頼できる
+
+```
+claude --dangerously-skip-permissions
+```
+
+### 2. Give Claude more tools
+
+カスタムでツール利用時には、その情報をCLAUDE.md に記載すると使用してくれる
+
+- 2. Claude にさらに多くのツールを提供する
+     Claude はシェル環境にアクセスできるため、自分自身で実行する場合と同じように、Claude 用の便利なスクリプトや関数を作成できます。また、MCP や REST API を通じて、より複雑なツールを活用することもできます。
+  - a. Use Claude with bash tools
+    a. Claude を bash ツールと併用する
+    Claude Code は bash 環境を継承し、すべてのツールにアクセスできます。Claude は Unix ツールや gh などの一般的なユーティリティを認識しますが、カスタム bash ツールについては、指示がなければ認識できません。
+
+#### b. Use Claude with MCP
+
+MCPを使用する場合、`.mcp.json`を作っておく
+
+- b. ClaudeをMCPと連携して使用する
+  Claude CodeはMCPサーバーとクライアントの両方として機能します。クライアントとして、任意の数のMCPサーバーに接続し、以下の3つの方法でツールにアクセスできます。
+
+#### figma mcp 連携
+
+通常だとfigmaの有料プランでないとMCP連携できない
+_コミュニティ版MCPサーバー_ だと可能らしい
+Figma-Context-MCPというコミュニティ版があり、こちらはFigma APIアクセストークンがあれば利用可能
+
+```
+調査結果から、FigmaのMCPサーバー連携について詳細をお答えします：
+残念ながら、無料ユーザーでは公式MCPサーバーは利用できません
+FigmaのDev Mode MCPサーバー（公式版）は、Professional、Organization、またはEnterpriseプランのDevまたはFullシートが必要で、無料プランでは利用できません Guide to the Dev Mode MCP Server – Figma Learn - Help Center +2。
+しかし、代替手段はあります
+1. コミュニティ版MCPサーバー
+Figma-Context-MCPというコミュニティ版があり、こちらはFigma APIアクセストークンがあれば利用可能です GitHub - GLips/Figma-Context-MCP: MCP server to provide Figma layout information to AI coding agents like Cursor。ただし、FigmaのAPIアクセストークンを取得するには、何らかのFigmaアカウントが必要です。
+2. 必要な設定
+
+Figmaアカウント（無料でも可）
+Figma APIアクセストークン
+対応するコードエディター（VS Code、Cursor、Windsurf、Claude Codeなど）
+
+3. コミュニティ版の設定方法
+{
+  "mcpServers": {
+    "Framelink Figma MCP": {
+      "command": "npx",
+      "args": ["-y", "figma-developer-mcp", "--figma-api-key=YOUR-KEY", "--stdio"]
+    }
+  }
+}
+
+まとめ
+
+- 公式版：有料プラン必須
+- コミュニティ版：無料Figmaアカウント + APIトークンで利用可能
+
+無料で試したい場合は、コミュニティ版のMCPサーバーを検討してみてください。
+```
+
+#### コミュニティ版
+
+[GLips / Figma-Context-MCP](https://github.com/GLips/Figma-Context-MCP?tab=readme-ov-file)
+Demo:[Creating a UI with Figma to Cursor MCP Server](https://www.youtube.com/watch?v=6G9yb-LrEqg)
+
 https://www.youtube.com/watch?v=GFJp1Wa1zMo&t=504s
-20:21
+27:08
